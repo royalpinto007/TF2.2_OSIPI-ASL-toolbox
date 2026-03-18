@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyASL Native GUI Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-frame overview-active" id="app-frame">
+      <aside class="left-rail">
+        <div class="brand-block">
+          <img
+            class="brand-mark-image"
+            src="./assets/OSIPI_logo_only_square.png"
+            alt="OSIPI logo"
+          />
+          <div>
+            <p class="eyebrow">OSIPI PyASL</p>
+            <h1>PyASL Workbench</h1>
+          </div>
+        </div>
+
+        <nav class="rail-nav">
+          <button class="rail-item active" data-view="workbench">Workbench</button>
+          <button class="rail-item" data-view="datasets">Datasets</button>
+          <button class="rail-item" data-view="templates">Templates</button>
+          <button class="rail-item" data-view="runs">Runs</button>
+          <button class="rail-item" data-view="reports">Reports</button>
+        </nav>
+
+        <section class="rail-card" id="session-card">
+          <p class="card-label">Current Session</p>
+          <strong>Preclinical pCASL cohort</strong>
+          <span>12 datasets queued · 1 active run</span>
+        </section>
+
+        <section class="rail-card">
+          <p class="card-label">Built For</p>
+          <strong>Preclinical and human ASL research</strong>
+          <span>Made for reproducible pipelines, cohort-scale execution, and method comparison.</span>
+        </section>
+
+        <section class="rail-card brand-card">
+          <p class="card-label">Key Capabilities</p>
+          <ul class="mini-list">
+            <li>Visual pipeline composition</li>
+            <li>YAML export and reuse</li>
+            <li>Batch cohort processing</li>
+          </ul>
+          <p class="card-label coming-soon">Coming Soon</p>
+          <ul class="mini-list">
+            <li>Preclinical co-registration</li>
+            <li>Preclinical normalization</li>
+          </ul>
+          <div class="brand-inline subtle">
+            <img
+              src="./assets/gsoc_logo.svg"
+              alt="Google Summer of Code"
+              class="rail-gsoc"
+            />
+            <span>OSIPI PyASL roadmap</span>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main-shell">
+        <section class="overview-screen view-panel active" data-view-panel="overview">
+          <div class="landing-brandbar">
+          <div class="landing-brand">
+              <img
+                class="landing-logo"
+                src="./assets/OSIPI_logo_only_square.png"
+                alt="OSIPI logo"
+              />
+              <div>
+                <p class="eyebrow">OSIPI PyASL</p>
+                <h1>PyASL Workbench</h1>
+              </div>
+            </div>
+            <div class="landing-meta">
+              <span>Visual workflows for ASL MRI analysis</span>
+            </div>
+          </div>
+
+          <header class="topbar overview-topbar">
+            <div>
+              <p class="eyebrow">PyASL Interface</p>
+              <h2>Visual pipeline design for reproducible ASL MRI analysis</h2>
+            </div>
+            <div class="topbar-actions">
+              <button id="overview-load-preset">Load Example</button>
+              <button class="primary" id="enter-workbench-button">Create Workflow</button>
+            </div>
+          </header>
+
+          <section class="overview-hero">
+            <div class="overview-copy">
+              <p class="eyebrow">Overview</p>
+              <h3>Build, validate, and run ASL preprocessing workflows with transparency and control.</h3>
+              <p>
+                This interface is designed to make PyASL easier to use for
+                researchers who want configurable pipelines, batch execution,
+                and clearer access to QC outputs and generated configs without
+                manual configuration of each processing step.
+              </p>
+              <div class="overview-actions">
+                <button class="primary" id="overview-enter-button">Create Workflow</button>
+                <button id="overview-run-batch">Open Batch Setup</button>
+              </div>
+            </div>
+
+            <div class="overview-summary">
+              <div class="summary-card">
+                <span class="metric">Pipeline Library</span>
+                <strong>7 validated preprocessing workflows</strong>
+              </div>
+              <div class="summary-card">
+                <span class="metric">Primary use</span>
+                <strong>Preclinical ASL and batch cohort analysis</strong>
+              </div>
+              <div class="summary-card">
+                <span class="metric">Upcoming modules</span>
+                <strong>Co-registration and normalization</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="overview-grid">
+            <article class="panel overview-card">
+              <p class="panel-kicker">Pipeline Builder</p>
+              <h3>Compose ASL preprocessing steps visually</h3>
+              <p>Configure motion correction, calibration, filtering, and downstream modules in one workflow.</p>
+            </article>
+
+            <article class="panel overview-card">
+              <p class="panel-kicker">Batch Processing</p>
+              <h3>Run cohort analyses with consistent preprocessing</h3>
+              <p>Apply the same validated workflow across datasets with queueing, validation, and failure handling.</p>
+            </article>
+
+            <article class="panel overview-card">
+              <p class="panel-kicker">QC and Outputs</p>
+              <h3>Inspect signal quality and generated outputs</h3>
+              <p>Review motion checks, run logs, and saved artifacts directly from the interface.</p>
+            </article>
+          </section>
+
+          <section class="workflow-strip panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Workflow Preview</p>
+                <h3>Standardized processing path</h3>
+              </div>
+            </div>
+            <div class="workflow-chain">
+              <div class="workflow-node">Input</div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-node">Motion correction</div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-node">Registration</div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-node">Quantification</div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-node">Outputs</div>
+            </div>
+          </section>
+
+          <section class="why-strip panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Why This Matters</p>
+                <h3>Common workflow issues this interface is meant to reduce</h3>
+              </div>
+            </div>
+            <div class="why-grid">
+              <div class="why-card negative">
+                <strong>Manual pipeline specification is time-consuming</strong>
+                <span>Writing and comparing configs by hand is error-prone.</span>
+              </div>
+              <div class="why-card negative">
+                <strong>Method comparison lacks standardization</strong>
+                <span>Switching preprocessing strategies is difficult to track consistently.</span>
+              </div>
+              <div class="why-card negative">
+                <strong>Scaling analyses across cohorts introduces inconsistency</strong>
+                <span>Running the same workflow across many datasets requires tighter control.</span>
+              </div>
+              <div class="why-card positive">
+                <strong>PyASL centralizes configuration and execution</strong>
+                <span>Visual workflows, reusable YAML, and batch execution support reproducible analysis.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="repro-strip panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Reproducibility</p>
+                <h3>Reproducible by design</h3>
+              </div>
+            </div>
+            <div class="repro-grid">
+              <div class="repro-card">
+                <strong>Export workflows as YAML</strong>
+                <span>Reuse the same configuration across CLI runs, notebooks, and future studies.</span>
+              </div>
+              <div class="repro-card">
+                <strong>Keep preprocessing consistent</strong>
+                <span>Apply the same parameterized workflow across entire cohorts.</span>
+              </div>
+              <div class="repro-card">
+                <strong>Track outputs and settings</strong>
+                <span>Generate logs, QC outputs, and batch summaries for auditability.</span>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="workbench-shell" id="workbench-shell">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Modern scientific workflow interface</p>
+            <h2>Build, inspect, and launch PyASL pipelines</h2>
+          </div>
+          <div class="topbar-actions">
+            <button id="load-preset-button">Load Preset</button>
+            <button id="export-yaml-button">Export YAML</button>
+            <button class="primary" id="run-batch-button">Run Batch</button>
+          </div>
+        </header>
+
+        <section class="hero-band view-panel active" data-view-panel="workbench">
+          <div class="hero-copy">
+            <h3>Build a reusable PyASL workflow, then run it at study scale.</h3>
+            <p>
+              Start from a pipeline family, inspect module settings, validate the
+              generated config, and launch batch runs with QC and YAML export built in.
+            </p>
+          </div>
+          <div class="hero-stats compact">
+            <span class="hero-chip">7 pipeline families</span>
+            <span class="hero-chip">12 queued runs</span>
+            <span class="hero-chip">Active: <strong id="active-profile-label">pCASL</strong></span>
+          </div>
+        </section>
+
+        <section class="work-area view-panel active" data-view-panel="workbench" id="work-area">
+          <div class="column canvas-column">
+            <section class="panel pipeline-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Pipeline Builder</p>
+                  <h3>Compose a PyASL workflow</h3>
+                </div>
+                <select id="pipeline-select">
+                  <option value="pcasl" selected>Preclinical pCASL</option>
+                  <option value="mti">Preclinical multi-TI PASL</option>
+                  <option value="custom">Custom mixed pipeline</option>
+                </select>
+              </div>
+
+              <div class="builder-toolbar">
+                <button class="small" id="add-module-button">Add Module</button>
+                <button class="small" id="use-template-button">Use Template</button>
+                <button class="small" id="validate-button">Validate</button>
+                <button class="small" id="toggle-yaml-button">Show YAML</button>
+              </div>
+
+              <div class="module-stack" id="module-stack"></div>
+              <div class="yaml-focus-note" id="yaml-focus-note">
+                Workflow steps are temporarily hidden while reviewing the generated YAML.
+              </div>
+            </section>
+
+            <section class="panel batch-panel collapsible-panel hidden-panel" id="batch-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Batch Queue</p>
+                  <h3>Launch across cohorts</h3>
+                </div>
+                <span class="live-pill">Continue on failure</span>
+              </div>
+
+              <div class="queue-grid">
+                <div class="queue-card">
+                  <p class="queue-title">Datasets</p>
+                  <ul class="queue-list">
+                    <li><span>cohort-a / sub-01</span><strong class="queued">Queued</strong></li>
+                    <li><span>cohort-a / sub-02</span><strong class="running">Running</strong></li>
+                    <li><span>cohort-b / sub-03</span><strong class="done">Done</strong></li>
+                    <li><span>cohort-c / sub-07</span><strong class="hold">Needs template</strong></li>
+                  </ul>
+                </div>
+
+                <div class="queue-card">
+                  <p class="queue-title">Batch Rules</p>
+                  <label class="check-row"><input type="checkbox" checked /> write JSON run summary</label>
+                  <label class="check-row"><input type="checkbox" checked /> keep running after failures</label>
+                  <label class="check-row"><input type="checkbox" /> resume incomplete runs</label>
+                  <label class="check-row"><input type="checkbox" checked /> save QC previews</label>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="column side-column">
+            <section class="panel inspector-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Inspector</p>
+                  <h3>Selected module settings</h3>
+                </div>
+                <span class="tag" id="inspector-tag">PreclinicalCoregister</span>
+              </div>
+
+              <p class="inspector-helper">
+                Editable defaults for the selected module. Change them here before export or batch run.
+              </p>
+
+              <div class="field-group">
+                <label for="inspector-param-1" id="inspector-label-1">Input root</label>
+                <input id="inspector-param-1" type="text" value="/study/rawdata/cohort-a" />
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="inspector-param-2" id="inspector-label-2">Reference target</label>
+                  <select id="inspector-param-2">
+                    <option selected>M0 / anatomical reference</option>
+                    <option>Mean control image</option>
+                    <option>Template image</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label for="inspector-param-3" id="inspector-label-3">Co-registration method</label>
+                  <select id="inspector-param-3">
+                    <option selected>Rigid + affine</option>
+                    <option>Affine only</option>
+                    <option>Template assisted</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="inspector-param-4" id="inspector-label-4">Normalization template</label>
+                <input id="inspector-param-4" type="text" value="/templates/mouse_template.nii.gz" />
+              </div>
+
+              <div class="inspector-note" id="inspector-note">
+                Align ASL outputs to M0 or anatomical reference for stable geometry.
+              </div>
+            </section>
+
+            <section class="panel qc-panel collapsible-panel hidden-panel" id="qc-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">QC + Logs</p>
+                  <h3>Execution feedback</h3>
+                </div>
+                <span class="live-pill">Run active</span>
+              </div>
+
+              <div class="qc-preview">
+                <div class="preview-grid">
+                  <span></span><span></span><span></span>
+                  <span></span><span class="focus"></span><span></span>
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="preview-meta">
+                  <strong>Motion + mask preview</strong>
+                  <span>sub-02 / preclinical pCASL</span>
+                </div>
+              </div>
+
+              <div class="log-console" id="log-console"></div>
+            </section>
+
+            <section class="panel yaml-panel collapsible-panel hidden-panel" id="yaml-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Config Preview</p>
+                  <h3>Generated YAML</h3>
+                </div>
+                <button class="small" id="hide-yaml-button">Hide</button>
+              </div>
+              <pre id="yaml-preview"></pre>
+            </section>
+          </div>
+        </section>
+
+        <section class="secondary-view view-panel" data-view-panel="datasets">
+          <div class="panel full-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Datasets</p>
+                <h3>Study browser</h3>
+              </div>
+            </div>
+            <div class="table-like">
+              <div class="table-row head"><span>Dataset</span><span>Status</span><span>Pipeline</span></div>
+              <div class="table-row"><span>cohort-a / sub-01 / ses-01</span><span>Queued</span><span>Preclinical pCASL</span></div>
+              <div class="table-row"><span>cohort-a / sub-02 / ses-01</span><span>Running</span><span>Preclinical pCASL</span></div>
+              <div class="table-row"><span>cohort-b / sub-03 / ses-01</span><span>Done</span><span>multi-TI PASL</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="secondary-view view-panel" data-view-panel="templates">
+          <div class="panel full-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Templates</p>
+                <h3>Normalization resources</h3>
+              </div>
+            </div>
+            <div class="table-like">
+              <div class="table-row head"><span>Name</span><span>Type</span><span>Path</span></div>
+              <div class="table-row"><span>mouse_template</span><span>Standard brain template</span><span>/templates/mouse_template.nii.gz</span></div>
+              <div class="table-row"><span>study_atlas_v1</span><span>Study-specific atlas</span><span>/templates/study_atlas_v1.nii.gz</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="secondary-view view-panel" data-view-panel="runs">
+          <div class="panel full-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Runs</p>
+                <h3>Recent execution history</h3>
+              </div>
+            </div>
+            <div class="table-like">
+              <div class="table-row head"><span>Run ID</span><span>Status</span><span>Summary</span></div>
+              <div class="table-row"><span>run-2026-03-19-001</span><span>Running</span><span>8/12 datasets completed</span></div>
+              <div class="table-row"><span>run-2026-03-18-004</span><span>Done</span><span>All outputs saved with QC previews</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="secondary-view view-panel" data-view-panel="reports">
+          <div class="panel full-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Reports</p>
+                <h3>Generated artifacts</h3>
+              </div>
+            </div>
+            <div class="table-like">
+              <div class="table-row head"><span>Artifact</span><span>Format</span><span>Purpose</span></div>
+              <div class="table-row"><span>batch-summary</span><span>JSON</span><span>Machine-readable run summary</span></div>
+              <div class="table-row"><span>masked-cbf-preview</span><span>PNG</span><span>Quick QC review output</span></div>
+              <div class="table-row"><span>pipeline-config-export</span><span>YAML</span><span>Reusable workflow preset</span></div>
+            </div>
+          </div>
+        </section>
+        </section>
+      </main>
+    </div>
+
+    <template id="module-template">
+      <article class="module-card">
+        <div class="module-line">
+          <span class="module-index"></span>
+          <div class="module-copy">
+            <strong class="module-name"></strong>
+            <p class="module-note"></p>
+          </div>
+          <span class="module-kind"></span>
+        </div>
+      </article>
+    </template>
+
+    <div class="modal-shell hidden" id="modal-shell">
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-card" id="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="panel-kicker" id="modal-kicker">Action</p>
+            <h3 id="modal-title">Modal title</h3>
+          </div>
+          <button class="icon-close" id="modal-close" aria-label="Close dialog">Close</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

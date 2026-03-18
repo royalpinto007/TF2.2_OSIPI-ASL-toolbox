@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyASL Workbench Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand-row">
+        <img
+          class="brand-logo"
+          src="../../../docs/assets/osipiImgs/OSIPI_logo.png"
+          alt="OSIPI logo"
+        />
+        <div class="brand-copy">
+          <span class="brand-kicker">OSIPI TF 2.2</span>
+          <strong>PyASL Workbench Prototype</strong>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">Workflows</a>
+        <a href="#">Preclinical</a>
+        <a href="#">Batch Processing</a>
+        <a href="#">Documentation</a>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <section class="sidebar-card">
+          <h2>Contents</h2>
+          <div class="docs-section">
+            <p class="docs-heading">Getting started</p>
+            <ul class="nav-list">
+              <li>Installation</li>
+              <li>Requirements</li>
+            </ul>
+          </div>
+
+          <div class="docs-section">
+            <p class="docs-heading">How to use</p>
+            <ul class="nav-list">
+              <li>Human Data Processing</li>
+              <li>Preclinical Data Processing</li>
+            </ul>
+          </div>
+
+          <div class="docs-section">
+            <p class="docs-heading">JSON Parameters</p>
+            <ul class="nav-list">
+              <li>Field Descriptions</li>
+            </ul>
+          </div>
+
+          <div class="docs-section">
+            <p class="docs-heading">Modules</p>
+            <ul class="nav-list">
+              <li>preclinical_bruker_loader</li>
+              <li>preclinical_motion_check</li>
+              <li>preclinical_slice_pld_adjust</li>
+              <li class="planned">preclinical_coregister</li>
+              <li class="planned">preclinical_normalize</li>
+            </ul>
+          </div>
+
+          <div class="docs-section">
+            <p class="docs-heading">Pipelines</p>
+            <ul class="nav-list">
+              <li>mricloud</li>
+              <li>asltbx</li>
+              <li>oxford_asl</li>
+              <li>dlasl</li>
+              <li>preclinical_mti</li>
+              <li class="current">preclinical_pcasl</li>
+              <li>custom</li>
+              <li>unified_runner</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="sidebar-card">
+          <h2>Prototype Notes</h2>
+          <p>
+            This sidebar now follows the current PyASL documentation hierarchy,
+            with the planned 2026 preclinical pages shown as additions to the
+            existing modules section.
+          </p>
+        </section>
+      </aside>
+
+      <main class="content">
+        <section class="hero-card">
+          <div>
+            <p class="eyebrow">Prototype aligned to current project materials</p>
+            <h1>Configure PyASL pipelines without leaving the docs-style workflow</h1>
+            <p class="hero-text">
+              A proposal-oriented interface for selecting a pipeline family,
+              adding the planned preclinical co-registration and normalization
+              steps, and launching reproducible batch runs on multiple datasets.
+            </p>
+          </div>
+          <div class="hero-meta">
+            <div class="stat-box">
+              <span>Theme Basis</span>
+              <strong>PyASL docs + OSIPI toolbox</strong>
+            </div>
+            <div class="stat-box">
+              <span>Primary Palette</span>
+              <strong>Indigo documentation UI</strong>
+            </div>
+            <div class="stat-box">
+              <span>Target Users</span>
+              <strong>Researchers and non-experts</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">Workflow Builder</p>
+                <h2>Pipeline Configuration</h2>
+              </div>
+              <span class="chip">Mapped to `run_pipeline`</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-card">
+                <label for="pipeline">Pipeline Type</label>
+                <select id="pipeline">
+                  <option value="pcasl" selected>Preclinical pCASL</option>
+                  <option value="mti">Preclinical multi-TI PASL</option>
+                  <option value="custom">Custom modular pipeline</option>
+                </select>
+
+                <label for="input-dir">Input Directory</label>
+                <input id="input-dir" type="text" value="/study/rawdata/mouse-cohort" />
+
+                <label for="config-mode">Configuration Mode</label>
+                <select id="config-mode">
+                  <option selected>Form-driven</option>
+                  <option>YAML-assisted</option>
+                  <option>Template preset</option>
+                </select>
+              </div>
+
+              <div class="form-card">
+                <label for="coreg">Preclinical Co-registration</label>
+                <select id="coreg">
+                  <option selected>Enabled</option>
+                  <option>Disabled</option>
+                </select>
+
+                <label for="norm">Preclinical Normalization</label>
+                <select id="norm">
+                  <option selected>Enabled</option>
+                  <option>Disabled</option>
+                </select>
+
+                <label for="template">Template Path</label>
+                <input
+                  id="template"
+                  type="text"
+                  value="/templates/mouse-template.nii.gz"
+                />
+              </div>
+            </div>
+
+            <div class="steps-card">
+              <div class="steps-header">
+                <h3>Resolved Processing Steps</h3>
+                <button type="button">Preview YAML</button>
+              </div>
+              <ol class="step-list" id="step-list"></ol>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">Batch Mode</p>
+                <h2>Queued Datasets</h2>
+              </div>
+            </div>
+
+            <ul class="dataset-list">
+              <li><span>sub-01 / ses-01</span><strong class="queued">Queued</strong></li>
+              <li><span>sub-02 / ses-01</span><strong class="running">Running</strong></li>
+              <li><span>sub-03 / ses-01</span><strong class="done">Done</strong></li>
+              <li><span>sub-04 / ses-02</span><strong class="queued">Queued</strong></li>
+            </ul>
+
+            <div class="summary-box">
+              <p>Summary output</p>
+              <code>derivatives/batch-summary.json</code>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">Execution Monitor</p>
+                <h2>Run Status</h2>
+              </div>
+              <span class="chip chip-live">Live</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-label">
+                <strong>sub-02 / ses-01</strong>
+                <span>Step 8 of 10</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="log-box" id="log-box"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <template id="step-template">
+      <li class="step-item">
+        <span class="step-name"></span>
+        <span class="step-note"></span>
+      </li>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

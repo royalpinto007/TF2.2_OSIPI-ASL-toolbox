@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyASL GUI Prototype - ASL GUI Inspired</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="window-shell">
+      <header class="app-header">
+        <div>
+          <p class="app-kicker">Reference Prototype</p>
+          <h1>PyASL GUI</h1>
+        </div>
+        <div class="app-meta">
+          <span class="meta-pill">Inspired by `asl_gui`</span>
+          <span class="meta-pill">Backend: `run_pipeline`</span>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="stepper">
+          <button class="step-tab active" data-step="input">Input Data</button>
+          <button class="step-tab" data-step="structural">Structural</button>
+          <button class="step-tab" data-step="calibration">Calibration</button>
+          <button class="step-tab" data-step="distortion">Distortion Correction</button>
+          <button class="step-tab" data-step="analysis">Analysis</button>
+          <button class="step-tab" data-step="output">Output</button>
+        </aside>
+
+        <main class="content">
+          <section class="panel active" data-panel="input">
+            <div class="panel-heading">
+              <div>
+                <h2>Input Data</h2>
+                <p>Load a dataset and select the PyASL pipeline family.</p>
+              </div>
+              <span class="tag">Step 1</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="dataset-type">Dataset Type</label>
+                <select id="dataset-type">
+                  <option value="pcasl" selected>Preclinical pCASL</option>
+                  <option value="mti">Preclinical multi-TI PASL</option>
+                  <option value="custom">Custom modular pipeline</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="input-dir">Input Directory</label>
+                <div class="inline-row">
+                  <input id="input-dir" type="text" value="/study/rawdata/cohort-a" />
+                  <button type="button">Browse</button>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="format">Input Format</label>
+                <select id="format">
+                  <option selected>Bruker 2dseq</option>
+                  <option>NIfTI / Analyze</option>
+                  <option>ASL-BIDS</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="pld">Acquisition Mode</label>
+                <select id="pld">
+                  <option selected>Single PLD</option>
+                  <option>Multi PLD / multi-TI</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="structural">
+            <div class="panel-heading">
+              <div>
+                <h2>Structural</h2>
+                <p>Attach anatomical images and select spatial reference information.</p>
+              </div>
+              <span class="tag">Step 2</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="anat-file">Structural Reference</label>
+                <div class="inline-row">
+                  <input id="anat-file" type="text" value="/study/anat/sub-01_T1w.nii.gz" />
+                  <button type="button">Browse</button>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="coreg-mode">Co-registration</label>
+                <select id="coreg-mode">
+                  <option selected>Enable preclinical co-registration</option>
+                  <option>Skip</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="coreg-ref">Reference Target</label>
+                <select id="coreg-ref">
+                  <option selected>M0 / anatomical image</option>
+                  <option>Mean control image</option>
+                  <option>Template reference</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="calibration">
+            <div class="panel-heading">
+              <div>
+                <h2>Calibration</h2>
+                <p>Configure quantification parameters and calibration inputs.</p>
+              </div>
+              <span class="tag">Step 3</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="m0-source">M0 Source</label>
+                <select id="m0-source">
+                  <option selected>Estimate from data</option>
+                  <option>Separate M0 image</option>
+                  <option>Manual value</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="t1blood">T1 Blood</label>
+                <input id="t1blood" type="text" value="2800" />
+              </div>
+
+              <div class="field">
+                <label for="label-efficiency">Labeling Efficiency</label>
+                <input id="label-efficiency" type="text" value="0.85" />
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="distortion">
+            <div class="panel-heading">
+              <div>
+                <h2>Distortion Correction</h2>
+                <p>Optional spatial corrections and normalization settings.</p>
+              </div>
+              <span class="tag">Step 4</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="distortion-mode">Correction Mode</label>
+                <select id="distortion-mode">
+                  <option selected>None</option>
+                  <option>Field map based</option>
+                  <option>Template assisted</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="norm-mode">Normalization</label>
+                <select id="norm-mode">
+                  <option selected>Enable template normalization</option>
+                  <option>Disable</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="template-file">Template File</label>
+                <div class="inline-row">
+                  <input id="template-file" type="text" value="/templates/mouse_template.nii.gz" />
+                  <button type="button">Browse</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="analysis">
+            <div class="panel-heading">
+              <div>
+                <h2>Analysis</h2>
+                <p>Review the assembled workflow and selected modules.</p>
+              </div>
+              <span class="tag">Step 5</span>
+            </div>
+
+            <div class="analysis-grid">
+              <div class="analysis-card">
+                <h3>Resolved Steps</h3>
+                <ol id="resolved-steps"></ol>
+              </div>
+
+              <div class="analysis-card">
+                <h3>Command Preview</h3>
+                <pre id="command-preview"></pre>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="output">
+            <div class="panel-heading">
+              <div>
+                <h2>Output</h2>
+                <p>Choose output location, batch behavior, and run monitoring.</p>
+              </div>
+              <span class="tag">Step 6</span>
+            </div>
+
+            <div class="analysis-grid">
+              <div class="analysis-card">
+                <h3>Batch Queue</h3>
+                <ul class="queue-list">
+                  <li><span>sub-01 / ses-01</span><strong class="queued">Queued</strong></li>
+                  <li><span>sub-02 / ses-01</span><strong class="running">Running</strong></li>
+                  <li><span>sub-03 / ses-01</span><strong class="done">Done</strong></li>
+                </ul>
+              </div>
+
+              <div class="analysis-card">
+                <h3>Run Log</h3>
+                <div class="log-box" id="log-box"></div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer-bar">
+            <div class="footer-left">
+              <button type="button" id="prev-step">Previous</button>
+              <button type="button" id="next-step">Next</button>
+            </div>
+            <div class="footer-right">
+              <button type="button">Save Settings</button>
+              <button type="button" class="primary">Run</button>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

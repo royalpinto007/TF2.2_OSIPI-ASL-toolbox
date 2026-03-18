@@ -1,0 +1,509 @@
+:root {
+  --bg: #f3efe4;
+  --surface: rgba(255, 252, 245, 0.84);
+  --surface-strong: #fffaf2;
+  --ink: #1f1c18;
+  --muted: #655d52;
+  --line: rgba(61, 47, 30, 0.14);
+  --accent: #c4572a;
+  --accent-soft: rgba(196, 87, 42, 0.12);
+  --accent-deep: #8b3415;
+  --sage: #50624c;
+  --gold: #ae7c22;
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --shadow: 0 20px 45px rgba(64, 42, 18, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(196, 87, 42, 0.2), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(80, 98, 76, 0.2), transparent 30%),
+    linear-gradient(180deg, #f8f4ea 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.page-shell {
+  width: min(1320px, calc(100% - 32px));
+  margin: 24px auto 48px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.hero-copy,
+.hero-panel,
+.workspace-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  padding: 34px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  inset: auto -80px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(196, 87, 42, 0.26), rgba(174, 124, 34, 0.06));
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: var(--accent-deep);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+h1 {
+  font-size: clamp(2.7rem, 6vw, 4.8rem);
+  max-width: 10ch;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+.hero-text {
+  max-width: 62ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 18px 0 24px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--accent), #d8834f);
+  color: white;
+  box-shadow: 0 10px 24px rgba(196, 87, 42, 0.28);
+}
+
+.secondary,
+.ghost {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.small {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.hero-panel {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.metric-card {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgba(80, 98, 76, 0.12), rgba(196, 87, 42, 0.12));
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metric-grid > div,
+.batch-summary > div {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr;
+  gap: 22px;
+}
+
+.workspace-card {
+  padding: 24px;
+}
+
+.workspace-main {
+  grid-column: 1;
+}
+
+.workspace-side {
+  grid-column: 2;
+}
+
+.section-heading,
+.subheading-row,
+.step-topline,
+.toggle-line,
+.path-row {
+  display: flex;
+  align-items: center;
+}
+
+.section-heading,
+.subheading-row {
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.status-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.running-pill {
+  background: rgba(80, 98, 76, 0.14);
+  color: var(--sage);
+}
+
+.builder-grid,
+.parameter-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.builder-grid {
+  grid-template-columns: 0.95fr 1.2fr;
+}
+
+.parameter-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.panel,
+.parameter-card,
+.toggle-card,
+.progress-card {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.panel label,
+.parameter-card label {
+  display: block;
+  margin: 14px 0 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+input,
+select {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(61, 47, 30, 0.16);
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+}
+
+.path-row {
+  gap: 10px;
+}
+
+.path-row input {
+  flex: 1;
+}
+
+.step-panel {
+  min-height: 100%;
+}
+
+.steps {
+  display: grid;
+  gap: 12px;
+}
+
+.step-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 232, 0.88));
+  animation: rise 420ms ease both;
+}
+
+.step-topline {
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.step-index {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
+.step-title {
+  font-weight: 700;
+}
+
+.step-tag {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--sage);
+  background: rgba(80, 98, 76, 0.12);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.step-description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.batch-summary {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.batch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.batch-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 13px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.dataset-name {
+  font-weight: 600;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.queued {
+  background: rgba(174, 124, 34, 0.14);
+  color: #8a6110;
+}
+
+.running {
+  background: rgba(80, 98, 76, 0.14);
+  color: var(--sage);
+}
+
+.done {
+  background: rgba(42, 138, 84, 0.14);
+  color: #23744a;
+}
+
+.hold {
+  background: rgba(137, 62, 41, 0.14);
+  color: #7c2f1b;
+}
+
+.toggle-card {
+  display: grid;
+  gap: 10px;
+}
+
+.toggle-line {
+  gap: 12px;
+  justify-content: flex-start;
+  color: var(--ink);
+}
+
+.toggle-line input {
+  width: 18px;
+  height: 18px;
+}
+
+.progress-copy {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.progress-copy span {
+  color: var(--muted);
+}
+
+.progress-bar {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(61, 47, 30, 0.1);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 72%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sage), #8ea584);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.log-console {
+  margin-top: 14px;
+  min-height: 210px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: #1d201f;
+  color: #e7eee7;
+  font-family: "SFMono-Regular", "Menlo", "Monaco", monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.log-console p {
+  margin: 0 0 8px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1080px) {
+  .hero,
+  .dashboard,
+  .builder-grid,
+  .parameter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-main,
+  .workspace-side {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    width: min(100% - 18px, 1320px);
+    margin-top: 12px;
+  }
+
+  .hero-copy,
+  .hero-panel,
+  .workspace-card {
+    padding: 18px;
+  }
+
+  .hero-actions,
+  .path-row {
+    flex-direction: column;
+  }
+
+  button,
+  .path-row input {
+    width: 100%;
+  }
+}

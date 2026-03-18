@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyASL Documentation Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <aside class="wy-nav-side">
+        <div class="wy-side-scroll">
+          <div class="wy-side-brand">
+            <img
+              class="brand-image"
+              src="../../../docs/assets/osipiImgs/OSIPI_logo.png"
+              alt="OSIPI logo"
+            />
+            <div class="brand-text">
+              <strong>PyASL</strong>
+              <span>Documentation Prototype</span>
+            </div>
+          </div>
+
+          <div class="wy-search-box">
+            <input type="text" value="Search docs" aria-label="Search docs" />
+          </div>
+
+          <nav class="wy-menu-vertical">
+            <p class="caption">Contents</p>
+
+            <section class="nav-group">
+              <a href="#" class="nav-section">Getting started</a>
+              <ul>
+                <li><a href="#">Installation</a></li>
+                <li><a href="#">Requirements</a></li>
+              </ul>
+            </section>
+
+            <section class="nav-group">
+              <a href="#" class="nav-section">How to use</a>
+              <ul>
+                <li><a href="#">Human Data Processing</a></li>
+                <li><a href="#">Preclinical Data Processing</a></li>
+              </ul>
+            </section>
+
+            <section class="nav-group">
+              <a href="#" class="nav-section">JSON Parameters</a>
+              <ul>
+                <li><a href="#">Field Descriptions</a></li>
+              </ul>
+            </section>
+
+            <section class="nav-group">
+              <a href="#" class="nav-section">Modules</a>
+              <ul>
+                <li><a href="#">preclinical_nifti_loader</a></li>
+                <li><a href="#">preclinical_bruker_loader</a></li>
+                <li><a href="#">preclinical_control_label_split</a></li>
+                <li><a href="#">preclinical_steady_state_trim</a></li>
+                <li><a href="#">preclinical_motion_check</a></li>
+                <li><a href="#" class="planned">preclinical_coregister</a></li>
+                <li><a href="#" class="planned">preclinical_normalize</a></li>
+                <li><a href="#">preclinical_save_outputs</a></li>
+              </ul>
+            </section>
+
+            <section class="nav-group">
+              <a href="#" class="nav-section current">Pipelines</a>
+              <ul>
+                <li><a href="#">mricloud</a></li>
+                <li><a href="#">asltbx</a></li>
+                <li><a href="#">oxford_asl</a></li>
+                <li><a href="#">dlasl</a></li>
+                <li><a href="#">preclinical_mti</a></li>
+                <li><a href="#" class="current">preclinical_pcasl</a></li>
+                <li><a href="#">custom</a></li>
+                <li><a href="#">unified_runner</a></li>
+              </ul>
+            </section>
+          </nav>
+        </div>
+      </aside>
+
+      <section class="wy-nav-content-wrap">
+        <header class="wy-nav-top">
+          <span>PyASL</span>
+        </header>
+
+        <main class="wy-nav-content">
+          <div class="rst-content">
+            <ul class="wy-breadcrumbs">
+              <li><a href="#">Docs</a></li>
+              <li><a href="#">Pipelines</a></li>
+              <li>preclinical_pcasl</li>
+            </ul>
+
+            <article>
+              <h1>Preclinical PCASL Pipeline</h1>
+
+              <p>
+                <strong>Runner:</strong>
+                <code>pyasl.pipelines.preclinical_pcasl_pipeline.run_preclinical_pcasl_pipeline</code>
+              </p>
+
+              <p>
+                <strong>Purpose.</strong> Full preclinical pCASL chain with
+                proposed 2026 extensions for GUI-driven execution, batch-wise
+                processing, co-registration, and normalization.
+              </p>
+
+              <div class="admonition note">
+                <p class="admonition-title">Proposal Prototype</p>
+                <p>
+                  This page mock shows how the new GUI and batch-mode features
+                  could be documented while staying visually consistent with the
+                  current PyASL documentation structure.
+                </p>
+              </div>
+
+              <h2>YAML Example</h2>
+
+              <div class="highlight">
+                <pre><code>type: pcasl
+
+steps:
+  - module: BrukerLoader
+    params: { expno: 18, procno: 1 }
+  - module: SteadyStateTrim
+    params: { trim: 2 }
+  - module: ControlLabelSplit
+    params: { control_first: true }
+  - module: MotionCheck
+  - module: DiffImage
+  - module: ComputeM0
+    params: { TR: from_meta, T1t: 1900 }
+  - module: PreclinicalCoregister
+    params: { reference: "M0", method: "rigid_affine" }
+  - module: SlicePLDAdjust
+    params: { SGap: 31, T1blood: 2800 }
+  - module: PreclinicalNormalize
+    params: { template: "mouse_template.nii.gz" }
+  - module: SaveOutputs</code></pre>
+              </div>
+
+              <h2>Prototype GUI mapping</h2>
+
+              <p>
+                The proposed GUI is designed as a front-end layer over the
+                existing YAML-driven runner. A documentation-aligned interface
+                would expose the same concepts users already see in PyASL:
+              </p>
+
+              <ul>
+                <li>pipeline type selection</li>
+                <li>step ordering and parameters</li>
+                <li>new preclinical co-registration and normalization steps</li>
+                <li>batch dataset queues and run summaries</li>
+              </ul>
+
+              <h2>Prototype preview</h2>
+
+              <div class="proto-block">
+                <div class="proto-toolbar">
+                  <span class="proto-pill">Form-driven</span>
+                  <span class="proto-pill">Batch enabled</span>
+                  <span class="proto-pill">Docs-aligned UI</span>
+                </div>
+
+                <div class="proto-grid">
+                  <section class="proto-card">
+                    <h3>Configuration</h3>
+                    <label for="pipeline-type">Pipeline Type</label>
+                    <select id="pipeline-type">
+                      <option value="pcasl" selected>Preclinical pCASL</option>
+                      <option value="mti">Preclinical multi-TI PASL</option>
+                      <option value="custom">Custom modular pipeline</option>
+                    </select>
+
+                    <label for="input-root">Input Directory</label>
+                    <input id="input-root" type="text" value="/study/rawdata/cohort-a" />
+
+                    <label for="template-path">Normalization Template</label>
+                    <input id="template-path" type="text" value="/templates/mouse_template.nii.gz" />
+                  </section>
+
+                  <section class="proto-card">
+                    <h3>Resolved Steps</h3>
+                    <ol class="resolved-steps" id="resolved-steps"></ol>
+                  </section>
+
+                  <section class="proto-card">
+                    <h3>Batch Queue</h3>
+                    <ul class="queue-list">
+                      <li><span>sub-01 / ses-01</span><strong class="queued">Queued</strong></li>
+                      <li><span>sub-02 / ses-01</span><strong class="running">Running</strong></li>
+                      <li><span>sub-03 / ses-01</span><strong class="done">Done</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="proto-card">
+                    <h3>Run Log</h3>
+                    <div class="log-box" id="log-box"></div>
+                  </section>
+                </div>
+              </div>
+
+              <h2>Expected 2026 additions</h2>
+
+              <table class="docutils">
+                <thead>
+                  <tr>
+                    <th>Area</th>
+                    <th>Current status</th>
+                    <th>Planned addition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>GUI</td>
+                    <td>Not present in current docs/workflow</td>
+                    <td>Form-based pipeline builder over existing runners</td>
+                  </tr>
+                  <tr>
+                    <td>Batch mode</td>
+                    <td>Manual repetition via CLI/YAML</td>
+                    <td>Multi-dataset queue with summary reporting</td>
+                  </tr>
+                  <tr>
+                    <td>Preclinical co-registration</td>
+                    <td>Missing as a named preclinical module</td>
+                    <td><code>PreclinicalCoregister</code></td>
+                  </tr>
+                  <tr>
+                    <td>Preclinical normalization</td>
+                    <td>Missing as a named preclinical module</td>
+                    <td><code>PreclinicalNormalize</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <template id="step-template">
+      <li><span class="step-name"></span><span class="step-status"></span></li>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyASL Studio Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">GSoC 2026 Prototype</p>
+          <h1>PyASL Studio</h1>
+          <p class="hero-text">
+            A proposal-ready interface for configuring ASL workflows, composing
+            preclinical processing steps, and launching batch runs without
+            writing code by hand.
+          </p>
+          <div class="hero-actions">
+            <button class="primary">Launch Draft Workflow</button>
+            <button class="secondary">Export Proposal Screenshot</button>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="metric-card">
+            <span class="metric-label">Project Scope</span>
+            <strong>GUI + Batch + Preclinical</strong>
+          </div>
+          <div class="metric-grid">
+            <div>
+              <span class="metric-label">Pipelines</span>
+              <strong>7</strong>
+            </div>
+            <div>
+              <span class="metric-label">Queued Runs</span>
+              <strong>12</strong>
+            </div>
+            <div>
+              <span class="metric-label">Prototype State</span>
+              <strong>Interactive</strong>
+            </div>
+            <div>
+              <span class="metric-label">Focus</span>
+              <strong>Accessibility</strong>
+            </div>
+          </div>
+        </aside>
+      </header>
+
+      <main class="dashboard">
+        <section class="workspace-card workspace-main">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Workflow Builder</p>
+              <h2>Compose a pipeline around real PyASL steps</h2>
+            </div>
+            <span class="status-pill">Config synced</span>
+          </div>
+
+          <div class="builder-grid">
+            <div class="panel">
+              <label for="dataset-type">Dataset Type</label>
+              <select id="dataset-type">
+                <option value="preclinical" selected>Preclinical pCASL</option>
+                <option value="human">Human ASL</option>
+                <option value="hybrid">Custom mixed pipeline</option>
+              </select>
+
+              <label for="pipeline-family">Pipeline Family</label>
+              <select id="pipeline-family">
+                <option value="pcasl" selected>Preclinical pCASL</option>
+                <option value="mti">Preclinical multi-TI PASL</option>
+                <option value="custom">Custom modular pipeline</option>
+              </select>
+
+              <label for="input-root">Input Folder</label>
+              <div class="path-row">
+                <input
+                  id="input-root"
+                  type="text"
+                  value="/datasets/mouse_pcasl_study"
+                />
+                <button class="ghost">Browse</button>
+              </div>
+
+              <label for="template-path">Normalization Template</label>
+              <div class="path-row">
+                <input
+                  id="template-path"
+                  type="text"
+                  value="/templates/mouse_brain_template.nii.gz"
+                />
+                <button class="ghost">Select</button>
+              </div>
+            </div>
+
+            <div class="panel step-panel">
+              <div class="subheading-row">
+                <h3>Pipeline Steps</h3>
+                <button class="ghost small">Add Step</button>
+              </div>
+              <div class="steps" id="step-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-card workspace-side">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Batch Mode</p>
+              <h2>Run across many studies</h2>
+            </div>
+          </div>
+
+          <div class="batch-summary">
+            <div>
+              <span class="metric-label">Queued Datasets</span>
+              <strong>12 subjects / 3 cohorts</strong>
+            </div>
+            <div>
+              <span class="metric-label">Output Pattern</span>
+              <strong>derivatives/{subject}/{session}</strong>
+            </div>
+          </div>
+
+          <ul class="batch-list">
+            <li>
+              <span class="dataset-name">cohort-a/sub-01</span>
+              <span class="badge queued">Queued</span>
+            </li>
+            <li>
+              <span class="dataset-name">cohort-a/sub-02</span>
+              <span class="badge running">Running</span>
+            </li>
+            <li>
+              <span class="dataset-name">cohort-b/sub-03</span>
+              <span class="badge done">Done</span>
+            </li>
+            <li>
+              <span class="dataset-name">cohort-c/sub-07</span>
+              <span class="badge hold">Needs template</span>
+            </li>
+          </ul>
+
+          <div class="toggle-card">
+            <label class="toggle-line">
+              <input type="checkbox" checked />
+              <span>Continue when a dataset fails</span>
+            </label>
+            <label class="toggle-line">
+              <input type="checkbox" checked />
+              <span>Write JSON summary report</span>
+            </label>
+            <label class="toggle-line">
+              <input type="checkbox" />
+              <span>Resume incomplete runs</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="workspace-card workspace-main">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Parameters</p>
+              <h2>Editable controls for proposal demos</h2>
+            </div>
+          </div>
+
+          <div class="parameter-grid">
+            <div class="parameter-card">
+              <h3>Co-registration</h3>
+              <label for="coreg-method">Method</label>
+              <select id="coreg-method">
+                <option selected>Rigid + affine</option>
+                <option>Affine only</option>
+                <option>Template-assisted</option>
+              </select>
+              <label for="coreg-target">Target Image</label>
+              <input id="coreg-target" type="text" value="M0 / anatomical reference" />
+            </div>
+
+            <div class="parameter-card">
+              <h3>Normalization</h3>
+              <label for="norm-space">Output Space</label>
+              <select id="norm-space">
+                <option selected>Mouse template space</option>
+                <option>Subject native space</option>
+                <option>Study-specific atlas</option>
+              </select>
+              <label for="interpolation">Interpolation</label>
+              <input id="interpolation" type="text" value="trilinear" />
+            </div>
+
+            <div class="parameter-card">
+              <h3>Quantification</h3>
+              <label for="t1blood">T1 Blood</label>
+              <input id="t1blood" type="text" value="2800" />
+              <label for="sgap">Slice Gap</label>
+              <input id="sgap" type="text" value="31" />
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-card workspace-side">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Execution</p>
+              <h2>Live run monitor</h2>
+            </div>
+            <span class="status-pill running-pill">Run active</span>
+          </div>
+
+          <div class="progress-card">
+            <div class="progress-copy">
+              <strong>sub-02 preclinical pCASL</strong>
+              <span>Step 7 of 10: PreclinicalNormalize</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="log-console" id="log-console">
+            <p>[INFO] Loaded Bruker dataset from cohort-a/sub-02</p>
+            <p>[INFO] MotionCheck completed</p>
+            <p>[INFO] PreclinicalCoregister aligned perfusion volume to M0</p>
+            <p>[INFO] Applying template normalization...</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="step-template">
+      <article class="step-card">
+        <div class="step-topline">
+          <span class="step-index"></span>
+          <span class="step-title"></span>
+          <span class="step-tag"></span>
+        </div>
+        <p class="step-description"></p>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
