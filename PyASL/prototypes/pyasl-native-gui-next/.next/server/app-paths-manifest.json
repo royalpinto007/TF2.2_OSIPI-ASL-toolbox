@@ -1,0 +1,8 @@
+{
+  "/workbench/page": "app/workbench/page.js",
+  "/templates/page": "app/templates/page.js",
+  "/datasets/page": "app/datasets/page.js",
+  "/page": "app/page.js",
+  "/runs/page": "app/runs/page.js",
+  "/reports/page": "app/reports/page.js"
+}
